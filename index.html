@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronomètre Inversé</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #8D5524, #E3A869);
+            color: #f1f1f1;
+            position: relative;
+            flex-direction: column;
+            transition: background 0.5s ease;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .text {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #a1c4c4;
+        }
+        .date {
+            font-size: 1.2em;
+            padding: 8px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffd700;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .time {
+            font-size: 3.5em;
+            font-weight: bold;
+            padding: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .time span {
+            display: inline-block;
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            text-align: center;
+            margin: 0 5px;
+        }
+        .time .separator {
+            width: 10px;
+            margin: 0 5px;
+            text-align: center;
+            display: inline-block;
+        }
+        .fade {
+            animation: fade 0.5s ease-in-out;
+        }
+        @keyframes fade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .discreet-text {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 1em;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .discreet-text:hover {
+            color: #ffd700;
+        }
+        .menu {
+            position: absolute;
+            bottom: 40px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            transform: translateY(100%);
+            animation: slideUp 0.3s ease forwards;
+            z-index: 2;
+        }
+        .menu.show {
+            display: flex;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+        .menu-item {
+            color: #f1f1f1;
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .menu-item:hover {
+            color: #ffd700;
+        }
+        .color-circle {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ffd700;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .color-picker {
+            position: absolute;
+            bottom: 80px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            display: none;
+            width: 300px;
+            height: 400px;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .color-picker.show {
+            display: block;
+        }
+        .color-wheel {
+            width: 200px;
+            height: 200px;
+            background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            position: relative;
+            cursor: crosshair;
+        }
+        .color-wheel-marker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+            border: 2px solid #fff;
+        }
+        .color-preview {
+            width: 100px;
+            height: 100px;
+            background: #ff0000;
+            margin: 0 auto 15px;
+            border: 2px solid #fff;
+            transition: background 0.5s ease;
+        }
+        .rgb-values {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .rgb-values div {
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
